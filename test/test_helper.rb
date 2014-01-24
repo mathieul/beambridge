@@ -1,7 +1,6 @@
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 
-require 'erlectricity'
-require 'rubygems'
+require 'beambridge'
 require 'test/unit'
 require 'test/spec'
 require 'stringio'

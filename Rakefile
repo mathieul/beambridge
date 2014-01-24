@@ -1,25 +1,11 @@
-require 'rubygems'
-require 'rake'
+require "bundler/gem_tasks"
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "erlectricity"
-    gem.rubyforge_project = "erlectricity"
-    gem.summary = "A library to interface erlang and ruby through the erlang port system"
-    gem.email = "tom@mojombo.com"
-    gem.homepage = "http://github.com/mojombo/erlectricity"
-    gem.authors = ["Scott Fleckenstein", "Tom Preston-Werner"]
-    gem.require_paths = ["lib", "ext"]
-    gem.files.include("ext")
-    gem.extensions << 'ext/extconf.rb'
+require "rake/testtask"
 
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
+desc "Default: run unit tests."
+task default: :test
 
+desc "Test the beambridge plugin."
 task :test do
   require 'open3'
   require 'fileutils'
@@ -44,33 +30,15 @@ task :test do
 end
 
 begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/*_test.rb'
-    test.verbose = true
+  require "rdoc/task"
+  desc "Generate documentation for the beambridge plugin."
+  RDoc::Task.new(:rdoc) do |rdoc|
+    rdoc.rdoc_dir = "rdoc"
+    rdoc.title    = "Beambridge"
+    rdoc.options << "--line-numbers"
+    rdoc.rdoc_files.include("README*")
+    rdoc.rdoc_files.include("lib/**/*.rb")
   end
 rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
-end
-
-
-task :default => :test
-
-require 'rake/rdoctask'
-require 'yaml'
-Rake::RDocTask.new do |rdoc|
-  if File.exist?('VERSION.yml')
-    config = YAML.load(File.read('VERSION.yml'))
-    version = "#{config[:major]}.#{config[:minor]}.#{config[:patch]}"
-  else
-    version = ""
-  end
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "erlectricity #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+  puts "RDoc::Task is not supported on this platform"
 end

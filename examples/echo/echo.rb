@@ -1,7 +1,6 @@
 $:.unshift File.join(File.dirname(__FILE__), *%w[../../lib])
 
-require 'rubygems'
-require 'erlectricity'
+require 'beambridge'
 
 receive do |f|
   f.when([:echo, String]) do |text|

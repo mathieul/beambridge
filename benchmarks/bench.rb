@@ -1,6 +1,6 @@
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 
-require 'erlectricity'
+require 'beambridge'
 require 'benchmark'
 
 data = [:ok, [:foo, :bar, [99, "bottles", "of", "beer", 3.14], [true, false]]]

@@ -1,3 +1,14 @@
+*.gem
+*.rbc
+.bundle
+.config
+.yardoc
+Gemfile.lock
+InstalledFiles
+_yardoc
+coverage
+doc/
+lib/bundler/man
 pkg
 ext/Makefile
 ext/decoder.bundle
@@ -5,3 +16,8 @@ ext/decoder.o
 *.beam
 *.dump
 .DS_Store
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp

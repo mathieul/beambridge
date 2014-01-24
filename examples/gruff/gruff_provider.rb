@@ -1,7 +1,6 @@
 $:.unshift File.join(File.dirname(__FILE__), *%w[../../lib])
 
-require 'erlectricity'
-require 'rubygems'
+require 'beambridge'
 require 'gruff'
 
 receive do |f|
