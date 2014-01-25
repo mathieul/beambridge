@@ -4,7 +4,7 @@ require 'beambridge'
 require 'benchmark'
 
 data = [:ok, [:foo, :bar, [99, "bottles", "of", "beer", 3.14], [true, false]]]
-bert = Erlectricity::Encoder.encode(data)
+bert = Beambridge::Encoder.encode(data)
 
 p bert
 

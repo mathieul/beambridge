@@ -1,11 +1,11 @@
-load File.dirname(__FILE__) + '/test_helper.rb'
+require "spec_helper"
 
 def simple_receiver_and_port(*terms, &block)
   port = FakePort.new(*terms)
   receiver = if block
-      Erlectricity::Receiver.new(port, &block)
+      Beambridge::Receiver.new(port, &block)
     else
-      Erlectricity::Receiver.new(port) do |f|
+      Beambridge::Receiver.new(port) do |f|
         f.when Erl.any do
           :matched
         end
@@ -13,10 +13,10 @@ def simple_receiver_and_port(*terms, &block)
     end
 end
 
-context "When a receiver is passed a message that matches two match blocks it" do
-  setup do
+describe "When a receiver is passed a message that matches two match blocks it" do
+  before(:each) do
     @port = FakePort.new([:foo, :foo])
-    @receiver = Erlectricity::Receiver.new(@port) do |f|
+    @receiver = Beambridge::Receiver.new(@port) do |f|
       f.when([:foo, :foo]) do
         :first
       end
@@ -27,19 +27,19 @@ context "When a receiver is passed a message that matches two match blocks it" d
     end
   end
 
-  specify "should run the first matching receiver's block" do
+  it "should run the first matching receiver's block" do
     @receiver.run.should == :first
   end
 end
 
-context "A receiver" do
-  specify "should return the result of the match block when finished" do
+describe "A receiver" do
+  it "should return the result of the match block when finished" do
     simple_receiver_and_port(:foo).run.should == :matched
     simple_receiver_and_port(:bar).run.should == :matched
     simple_receiver_and_port(:bar, :baz).run.should == :matched
   end
 
-  specify "should process another message if the matched block returns the results of receive_loop" do
+  it "should process another message if the matched block returns the results of receive_loop" do
     recv = simple_receiver_and_port(:foo, :bar, :baz) do |f|
       f.when(:bar) {  }
       f.when(Erl.any) { f.receive_loop }
@@ -49,9 +49,9 @@ context "A receiver" do
     recv.port.terms.should == [:baz]
   end
 
-  specify "should properly nest" do
+  it "should properly nest" do
     @port = FakePort.new(:foo, :bar, :baz)
-    @receiver = Erlectricity::Receiver.new(@port) do |f|
+    @receiver = Beambridge::Receiver.new(@port) do |f|
       f.when(:foo) do
         f.receive do |g|
           g.when(:bar){ :ok }
@@ -68,9 +68,9 @@ context "A receiver" do
     @port.terms.should == []
   end
 
-  specify "should queue up skipped results and restore them when a match happens" do
+  it "should queue up skipped results and restore them when a match happens" do
     @port = FakePort.new(:foo, :baz, :bar)
-    @receiver = Erlectricity::Receiver.new(@port) do |f|
+    @receiver = Beambridge::Receiver.new(@port) do |f|
       f.when(:foo) do
         f.receive do |g|
           g.when(:bar){ :ok }
@@ -87,10 +87,10 @@ context "A receiver" do
     @port.terms.should == []
   end
 
-  specify "should expose bindings to the matched block" do
+  it "should expose bindings to the matched block" do
     @port = FakePort.new(:foo, :bar, :baz)
     results = []
-    @receiver = Erlectricity::Receiver.new(@port) do |f|
+    @receiver = Beambridge::Receiver.new(@port) do |f|
       f.when(Erl.atom) do |bindinated|
         results << bindinated
         f.receive_loop

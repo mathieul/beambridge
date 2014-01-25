@@ -1,16 +1,14 @@
-$:.unshift(File.dirname(__FILE__) + '/../lib')
+require "bundler/setup"
 
-require 'beambridge'
-require 'test/unit'
-require 'test/spec'
-require 'stringio'
+require "stringio"
+require "pry"
+require "beambridge"
 
 $stdout.sync = true
 
-class Test::Unit::TestCase
+module BeambridgeTestHelpers
   def run_erl(code)
-    cmd = %Q{erl -noshell -eval "A = #{code.split.join(' ')}, io:put_chars(binary_to_list(A))." -s erlang halt}
-    `#{cmd}`
+    %x{erl -noshell -eval "A = #{code.split.join(' ')}, io:put_chars(binary_to_list(A))." -s erlang halt}
   end
 
   def encode_packet(code)
@@ -23,7 +21,7 @@ class Test::Unit::TestCase
   end
 end
 
-class FakePort < Erlectricity::Port
+class FakePort < Beambridge::Port
   attr_reader :sent
   attr_reader :terms
 
@@ -42,4 +40,8 @@ class FakePort < Erlectricity::Port
   def read_from_input
     @terms.shift
   end
+end
+
+RSpec.configure do |config|
+  config.include BeambridgeTestHelpers
 end
