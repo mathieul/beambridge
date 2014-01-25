@@ -1,3 +1,4 @@
+# coding: utf-8
 require "spec_helper"
 
 describe "When packing to a binary stream" do
@@ -120,6 +121,13 @@ describe "When packing to a binary stream" do
 
     write_any("hey who").should == get_erl_with_magic("<< \"hey who\" >>")
     write_any("").should == get_erl_with_magic("<< \"\" >>")
+  end
+
+  it "encodes a string with unicode characters with the correct length" do
+    write_any([:hi, "😸", :bye]).should == [
+      131, 104, 3, 100, 0, 2, 104, 105, 109, 0, 0, 0, 4,
+      240, 159, 152, 184, 100, 0, 3, 98, 121, 101
+    ]
   end
 
   def get
