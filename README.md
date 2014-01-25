@@ -1,28 +1,29 @@
-Erlectricity
-============
+# Beambridge #
 
-http://github.com/mojombo/erlectricity
+https://github.com/mathieul/beambridge
 
-By Scott Fleckenstein, Tom Preston-Werner
+Fork of Erlectricity by Scott Fleckenstein, Tom Preston-Werner (http://github.com/mojombo/erlectricity).
 
-Development Status: Production/Stable
+The original erlectricity gem doesn't seem to be supported and updated anymore,
+no commit in 4 years, a pull request pending for the last 3 years.
+
+So I've forked the repository origin of the pending pull request and did cherry pick
+most of the pull request commits. And I had to rename the gem so I could publish it.
+
+Development Status: port for 1.9.3, 2.0.x, 2.1.x in progress
 
 
 Description
 -----------
 
-Erlectricity allows a Ruby program to receive and respond to Erlang messages
+Beambridge allows a Ruby program to receive and respond to Erlang messages
 sent over the Erlang binary protocol.
 
 
 Install
 -------
 
-$ gem install erlectricity
-
--or-
-
-$ gem install mojombo-erlectricity -s http://gems.github.com
+$ gem install beambridge
 
 
 The Simplest Example
@@ -30,8 +31,7 @@ The Simplest Example
 
 ### Ruby side (echo.rb)
 
-    require 'rubygems'
-    require 'erlectricity'
+    require 'beambridge'
 
     receive do |f|
       f.when([:echo, String]) do |text|
@@ -106,9 +106,9 @@ Data Type Conversions and Matching
 Contribute
 ----------
 
-If you'd like to hack on Erlectricity, start by forking my repo on GitHub:
+If you'd like to hack on Beambridge, start by forking my repo on GitHub:
 
-http://github.com/mojombo/erlectricity
+https://github.com/mathieul/beambridge
 
 To get all of the dependencies, install the gem first. The best way to get
 your changes merged back into core is as follows:
