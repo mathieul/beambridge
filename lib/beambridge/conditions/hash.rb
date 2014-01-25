@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class HashCondition < Condition
     def satisfies?(arg)
       return false unless arg.class == Array

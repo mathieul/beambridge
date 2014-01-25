@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class TypeCondition < Condition
     attr_accessor :type
 

@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class Receiver
     attr_accessor :port
     attr_accessor :parent
@@ -64,6 +64,6 @@ module Kernel
   def receive(input = nil, output = nil, &block)
     input ||= IO.new(3)
     output ||= IO.new(4)
-    Erlectricity::Receiver.new(Erlectricity::Port.new(input, output), nil, &block).run
+    Beambridge::Receiver.new(Beambridge::Port.new(input, output), nil, &block).run
   end
 end

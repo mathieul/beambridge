@@ -1,3 +1,3 @@
-class Erlectricity::List < Array
+class Beambridge::List < Array
 
 end

@@ -1,3 +1,3 @@
-class ErlectricityError < StandardError
+class BeambridgeError < StandardError
 
 end

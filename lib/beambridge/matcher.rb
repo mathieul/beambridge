@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class Matcher
     attr_accessor :condition, :block
     attr_accessor :receiver

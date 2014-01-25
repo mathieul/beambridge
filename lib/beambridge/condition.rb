@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class Condition
     def self.for(a)
       case a
@@ -36,11 +36,11 @@ module Erlectricity
     end
 
     def pid
-      TypeCondition.new(Erlectricity::Pid)
+      TypeCondition.new(Beambridge::Pid)
     end
 
     def ref
-      TypeCondition.new(Erlectricity::NewReference)
+      TypeCondition.new(Beambridge::NewReference)
     end
 
     def string

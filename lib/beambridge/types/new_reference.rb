@@ -1,3 +1,3 @@
-module Erlectricity
+module Beambridge
   NewReference = Struct.new :node, :creation, :id
 end

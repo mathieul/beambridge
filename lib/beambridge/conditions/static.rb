@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class StaticCondition < Condition
     attr_accessor :value
     def initialize(value)

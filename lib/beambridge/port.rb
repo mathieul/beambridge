@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class Port
     attr_reader :input, :output
     attr_reader :skipped
@@ -13,7 +13,7 @@ module Erlectricity
 
       output.set_encoding("ASCII-8BIT")
 
-      @encoder = Erlectricity::Encoder.new(nil)
+      @encoder = Beambridge::Encoder.new(nil)
       @skipped = []
       @queue = []
     end
@@ -42,7 +42,7 @@ module Erlectricity
 
       packet_length = raw.unpack('N').first
       data = input.read(packet_length)
-      Erlectricity::Decoder.decode(data)
+      Beambridge::Decoder.decode(data)
     end
   end
 end

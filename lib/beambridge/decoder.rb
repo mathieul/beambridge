@@ -1,7 +1,7 @@
-module Erlectricity
+module Beambridge
   class Decoder
     attr_accessor :in
-    include Erlectricity::External::Types
+    include Beambridge::External::Types
 
     def self.decode(string)
       new(StringIO.new(string)).read_any
@@ -13,7 +13,7 @@ module Erlectricity
     end
 
     def read_any
-      fail("Bad Magic") unless read_1 == Erlectricity::External::VERSION
+      fail("Bad Magic") unless read_1 == Beambridge::External::VERSION
       read_any_raw
     end
 
@@ -182,13 +182,13 @@ module Erlectricity
 
     def read_nil
       fail("Invalid Type, not a nil list") unless read_1 == NIL
-      Erlectricity::List.new([])
+      Beambridge::List.new([])
     end
 
     def read_erl_string
       fail("Invalid Type, not an erlang string") unless read_1 == STRING
       length = read_2
-      Erlectricity::List.new(read_string(length).unpack('C' * length))
+      Beambridge::List.new(read_string(length).unpack('C' * length))
     end
 
     def read_list
@@ -196,7 +196,7 @@ module Erlectricity
       length = read_4
       list = (0...length).map { |i| read_any_raw }
       read_1
-      Erlectricity::List.new(list)
+      Beambridge::List.new(list)
     end
 
     def read_bin

@@ -392,7 +392,7 @@ VALUE method_decode(VALUE klass, VALUE rString) {
 }
 
 void Init_decoder() {
-  mErlectricity = rb_const_get(rb_cObject, rb_intern("Erlectricity"));
+  mErlectricity = rb_const_get(rb_cObject, rb_intern("Beambridge"));
   cDecoder = rb_define_class_under(mErlectricity, "Decoder", rb_cObject);
   rb_define_singleton_method(cDecoder, "decode", method_decode, 1);
 }

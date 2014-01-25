@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   module External
     module  Types
       SMALL_INT = 97

@@ -1,4 +1,4 @@
-module Erlectricity
+module Beambridge
   class BooleanCondition < Condition
     def satisfies?(arg)
       [TrueClass, FalseClass].include?(arg.class)

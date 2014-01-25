@@ -1,6 +1,6 @@
-module Erlectricity
+module Beambridge
   class Encoder
-    include Erlectricity::External::Types
+    include Beambridge::External::Types
 
     attr_accessor :out
 
@@ -15,7 +15,7 @@ module Erlectricity
     end
 
     def write_any obj
-      write_1 Erlectricity::External::VERSION
+      write_1 Beambridge::External::VERSION
       write_any_raw obj
     end
 
@@ -24,9 +24,9 @@ module Erlectricity
         when Symbol then write_symbol(obj)
         when Fixnum, Bignum then write_fixnum(obj)
         when Float then write_float(obj)
-        when Erlectricity::NewReference then write_new_reference(obj)
-        when Erlectricity::Pid then write_pid(obj)
-        when Erlectricity::List then write_list(obj)
+        when Beambridge::NewReference then write_new_reference(obj)
+        when Beambridge::Pid then write_pid(obj)
+        when Beambridge::List then write_list(obj)
         when Array then write_tuple(obj)
         when String then write_binary(obj)
         when Time then write_any_raw(obj.to_i.divmod(1000000) + [obj.usec])
@@ -68,7 +68,7 @@ module Erlectricity
       if num >= 0 && num < 256
         write_1 SMALL_INT
         write_1 num
-      elsif num <= Erlectricity::External::MAX_INT && num >= Erlectricity::External::MIN_INT
+      elsif num <= Beambridge::External::MAX_INT && num >= Beambridge::External::MIN_INT
         write_1 INT
         write_4 num
       else
@@ -109,7 +109,7 @@ module Erlectricity
     end
 
     def write_new_reference(ref)
-      fail(ref) unless ref.is_a?(Erlectricity::NewReference)
+      fail(ref) unless ref.is_a?(Beambridge::NewReference)
       write_1 NEW_REF
       write_2 ref.id.length
       write_symbol(ref.node)
@@ -118,7 +118,7 @@ module Erlectricity
     end
 
     def write_pid(pid)
-      fail(pid) unless pid.is_a? Erlectricity::Pid
+      fail(pid) unless pid.is_a? Beambridge::Pid
       write_1 PID
       write_symbol(pid.node)
       write_4 pid.id
